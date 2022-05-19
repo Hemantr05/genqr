@@ -1,6 +1,5 @@
 import io
 import qrcode
-import numpy as np
 # from pyzbar.pyzbar import decode
 
 

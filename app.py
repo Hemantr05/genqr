@@ -7,17 +7,19 @@ from starlette.responses import StreamingResponse
 
 # from utils import create_qr, img2bytes, decode_qr
 from database.database_ops import firestore_delete, firestore_read, firestore_write
-from utils import create_qr, img2bytes
+from utils.utils import create_qr, img2bytes
 
 app = FastAPI()
 
 @app.get('/')
 async def root():
+    """Status check"""
     content = {"status": "Ok"}
     return JSONResponse(content=content)
 
 @app.post('/api/v1/qr/create')
 async def create(content: str):
+    """Create QR code for a given string"""
     resp = {"id": None}
     try:
         image = create_qr(content)
@@ -30,6 +32,7 @@ async def create(content: str):
 
 @app.get('/api/v1/qr/fetch')
 async def retrieve_qr(id: Optional[UUID] = str(id)):
+    """Fetch QR code image for generated id"""
     try:
         image = firestore_read(id)
         return StreamingResponse(content=image, status_code=200, media="image/png")
@@ -39,6 +42,7 @@ async def retrieve_qr(id: Optional[UUID] = str(id)):
 
 @app.delete("/api/v1/qr/delete")
 async def delete_qr(id: Optional[UUID] = str(id)):
+    """Delete QR code existing"""
     resp = {"id": None}
     try:
         firestore_delete(id)

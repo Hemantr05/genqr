@@ -16,7 +16,7 @@ async def root():
     content = {"status": "Ok"}
     return JSONResponse(content=content)
 
-@app.post('/create')
+@app.post('/api/v1/qr/create')
 async def create(content: str):
     resp = {"id": None}
     try:
@@ -28,7 +28,7 @@ async def create(content: str):
         print(traceback.print_exc(), flush=True)
         return JSONResponse(content={"error message": str(e)}, status_code=500)
 
-@app.get('/{id}')
+@app.get('/api/v1/qr/{id}')
 async def retrieve_qr(id: Optional[UUID] = str(id)):
     try:
         image = firestore_read(id)
@@ -37,7 +37,7 @@ async def retrieve_qr(id: Optional[UUID] = str(id)):
         print(traceback.print_exc(), flush=True)
         return JSONResponse(content={"error message": str(e)}, status_code=500)
 
-@app.delete("/{id}")
+@app.delete("/api/v1/qr/{id}")
 async def delete_qr(id: Optional[UUID] = str(id)):
     resp = {"id": None}
     try:
@@ -48,7 +48,7 @@ async def delete_qr(id: Optional[UUID] = str(id)):
         print(traceback.print_exc(), flush=True)
         return JSONResponse(content={"error message": str(e)}, status_code=500)
 
-# @app.get('/decode')
+# @app.get('/api/v1/decode')
 # async def decode(image: UploadFile = File(...)):
 #     resp = {"message": None}
 #     try:

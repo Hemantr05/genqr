@@ -28,7 +28,7 @@ async def create(content: str):
         print(traceback.print_exc(), flush=True)
         return JSONResponse(content={"error message": str(e)}, status_code=500)
 
-@app.get('/api/v1/qr/{id}')
+@app.get('/api/v1/qr/fetch')
 async def retrieve_qr(id: Optional[UUID] = str(id)):
     try:
         image = firestore_read(id)
@@ -37,7 +37,7 @@ async def retrieve_qr(id: Optional[UUID] = str(id)):
         print(traceback.print_exc(), flush=True)
         return JSONResponse(content={"error message": str(e)}, status_code=500)
 
-@app.delete("/api/v1/qr/{id}")
+@app.delete("/api/v1/qr/delete")
 async def delete_qr(id: Optional[UUID] = str(id)):
     resp = {"id": None}
     try:

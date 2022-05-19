@@ -1,9 +1,11 @@
+import os
 import firebase_admin
 from firebase_admin import credentials, firestore
 from firedantic import configure
-from models import QRCreation, ImageInfo
+from models.models import QRCreation, ImageInfo
 
-cred = credentials.Certificate("test-ec22b-firebase-adminsdk-fezwt-61803c7945.json")
+# cred = credentials.Certificate("test-ec22b-firebase-adminsdk-fezwt-61803c7945.json")
+cred = credentials.Certificate(os.environ("FIRESTORE_SERVICE_ACCOUNT"))
 firebase_admin.initialize_app(cred, {"projectId": cred.project_id})
 
 db = firestore.client()

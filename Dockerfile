@@ -8,6 +8,7 @@ RUN apt update -y && \
     pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
 COPY . /app
+ENV FIRESTORE_SERVICE_ACCOUNT=test-ec22b-firebase-adminsdk-fezwt-61803c7945.json
 
 EXPOSE 8080
 
